@@ -6,22 +6,17 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    private bool activeTurn;
-    [SerializeField] private int remainingBalls = 4;
+    public int remainingBalls = 4;
     [SerializeField] private GameObject readyBall;
     [SerializeField] private GameObject anchor;
-    private float ballRemoveTime = 5;
-    [SerializeField] private LayerMask ballLayer;
-    public float score;
-    private float scoreIncrease = 100f;
-    private float scoreMulitplier = 1.1f;
-    [SerializeField] private GameObject hoop;
+    private float ballRemoveTime = 5f;
     [SerializeField] private TextMeshProUGUI remainingBallsTMP;
+    [SerializeField] private ScoreTrigger scoreTrigger;
 
-
-    // Start is called before the first frame update
     void Start()
     {
+        Application.targetFrameRate = 60;
+
         if (Instance == null)
         {
             Instance = this;
@@ -32,15 +27,17 @@ public class GameManager : MonoBehaviour
         SetNewBall();
     }
 
-    // Update is called once per frame
     void Update()
     {
         remainingBallsTMP.text = remainingBalls.ToString();
+        if (remainingBalls < 0)
+        {
+            remainingBalls = 0;
+        }
     }
 
     public void SetNewBall()
     {
-        activeTurn = false;
         
         if (remainingBalls >= 1)
         {
@@ -49,13 +46,6 @@ public class GameManager : MonoBehaviour
         }
 
         remainingBalls--;
+        scoreTrigger.ballScored = false;
     }
-
-    //public void OnTriggerEnter(Collider other)
-    //{
-        //if (other.gameObject.layer == ballLayer)
-        //{
-            //score 
-        //}
-    //}
 }

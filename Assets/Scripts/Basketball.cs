@@ -11,11 +11,6 @@ public class Basketball : MonoBehaviour
     private bool isFired;
 
 
-    void Start()
-    {
-        
-    }
-
     private void FixedUpdate()
     {
         if (isMouseDown && !isFired)
